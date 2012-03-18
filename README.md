@@ -10,7 +10,7 @@ http://twitter.com/#!/chrisallenlane
 What it Does
 ------------
 `Pharse` is a command-line PHP option-parser, heavily inspired by William
-Morgan's excellent [Trollop option parse for Ruby](http://trollop.rubyforge.org/).
+Morgan's excellent [Trollop option parser for Ruby](http://trollop.rubyforge.org/).
 It is designed to be easy-to-use and idiomatic to PHP.
 
 
