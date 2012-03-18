@@ -106,7 +106,6 @@ class Pharse{
         }
 
         # return the array of parsed options
-        print_r(self::$return);
         return self::$return;
     }
     
