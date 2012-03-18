@@ -1,4 +1,4 @@
-Phrase - Command Line Option Parser for PHP
+Pharse - Command Line Option Parser for PHP
 =================
 Chris Lane  
 18 Mar 2012  
