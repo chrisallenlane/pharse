@@ -1,7 +1,7 @@
 Phrase - Command Line Option Parser for PHP
 =================
 Chris Lane  
-18 Mar 2012
+18 Mar 2012  
 chris@chris-allen-lane.com  
 http://chris-allen-lane.com  
 http://twitter.com/#!/chrisallenlane
@@ -23,10 +23,10 @@ Usage Examples
 --------------
 Usage is simple:
 
-1) `include` or `require` `pharse.php` into your application
-2) Create an associative array of program options
-3) Optionally set a help banner by invoking `Pharse::setBanner($banner)`
-4) Statically invoke `Pharse::options($options)` to engage the option parser
+1. `include` or `require` `pharse.php` into your application
+2. Create an associative array of program options
+3. Optionally set a help banner by invoking `Pharse::setBanner($banner)`
+4. Statically invoke `Pharse::options($options)` to engage the option parser
 
 The included `example.php` provides a working, executable demonstration of
 the library's usage.
