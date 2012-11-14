@@ -78,7 +78,7 @@ Note that, in order to use the default password, you must invoke the -p
 option, though you need not specify an actual value for the option. In
 other words, this will NOT work:
 
- $ ./example.php -u chris -p
+ $ ./example.php -u chris
 
 */
 

@@ -34,7 +34,7 @@ the library's usage.
 
 Known Issues
 ------------
-This script will likely exhibit undesireable behavior if more than 26
+This script will likely exhibit undesirable behavior if more than 26
 options are specified. This is because each short option is automatically
 chosen (if not explicitly specified) from [a-z], and the supply of 
 lowercase letters will be exhausted beyond 26.
