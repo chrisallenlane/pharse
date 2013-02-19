@@ -1,4 +1,4 @@
-Pharse - Command Line Option Parser for PHP
+pharse - Command Line Option Parser for PHP
 =================
 Chris Lane  
 18 Mar 2012  
@@ -9,7 +9,7 @@ http://twitter.com/#!/chrisallenlane
 
 What it Does
 ------------
-`Pharse` is a command-line PHP option-parser, heavily inspired by William
+`pharse` is a command-line PHP option-parser, heavily inspired by William
 Morgan's excellent [Trollop option parser for Ruby](http://trollop.rubyforge.org/).
 It is designed to be easy-to-use and idiomatic to PHP.
 
@@ -39,7 +39,7 @@ options are specified. This is because each short option is automatically
 chosen (if not explicitly specified) from [a-z], and the supply of 
 lowercase letters will be exhausted beyond 26.
 
-Also note that, unlike Trollop, `Pharse` does NOT support nested options
+Also note that, unlike Trollop, `pharse` does NOT support nested options
 (as in `git push origin master`, `git pull origin master`, etc.) I don't
 need that functionality for the overwhelming majority of my own use-cases,
 and hence I did not take the time to implement it. If you find that you need

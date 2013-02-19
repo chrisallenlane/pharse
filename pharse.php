@@ -8,7 +8,7 @@ class Pharse{
     static $options = array();
     static $return  = array();
     static $shorts  = array();
-    
+
     /**
      * This is the main option parsing method
      * 
@@ -19,7 +19,7 @@ class Pharse{
         # use the globalized $argv and unset the filename argument
         global $argv;
         unset($argv[0]);
-        
+
         # manually add the default 'help' command
         $options += array(
             'help' => array(
@@ -27,12 +27,12 @@ class Pharse{
                 'description'   => 'Display this help banner',
             )
         );
-        
+
         # create the option specifications
         foreach($options as $option_name => $constraints){
             Pharse::$options[$option_name] = new PharseOption($option_name, $constraints);
         }
-        
+
         # now do the actual option parsing
         # cheaply parse the args into $key => $val
         $arg_string = trim(implode($argv, ' '));
@@ -46,24 +46,24 @@ class Pharse{
             $option  = null;
             $value   = null;
             $the_opt = null;
-            
+
             # separate the string on the equals sign if one exists
             if(strpos($arg, '=')){
                 $option = trim(substr($arg, 0, strpos($arg, '=')));
                 $value  = trim(substr($arg, strpos($arg, '=') + 1));
             }
-            
+
             # otherwise, split on the first space
             else if(strpos($arg, ' ')){
                 $option = trim(substr($arg, 0, strpos($arg, ' ')));
                 $value  = trim(substr($arg, strpos($arg, ' ') + 1));
             }
-            
+
             # if an option is set with no value, handle it
             else {
                 $option = trim($arg);
             }
-            
+
             # locate the option whose value needs to be set
             if(isset(Pharse::$options[$option])){
                 $the_opt = Pharse::$options[$option];
@@ -72,12 +72,12 @@ class Pharse{
             } else {
                 die("Error: option {$option} is unrecognized.\n");
             }
-            
+
             # if value was unspecified, look up the default
             if($value == null){
                 $value = $the_opt->default;
             }
-            
+
             # use some type-punning to cast $value to the appropriate
             # PHP data-type
             if(is_numeric($value)){
@@ -85,21 +85,21 @@ class Pharse{
             } else {
                 $value .= "";
             }
-            
+
             # now, set the value for the option
             $the_opt->value = $value;
-            
+
             # Save the data in the array of data to be returned. If all
             # of the provided options pass validation, this data will
             # be returned to the host program.
             self::$return[$the_opt->name] = $the_opt->value;
             self::$return[$the_opt->name . "_given"] = true;
         }
-        
+
         # Now that we've successfully parsed the options, simply
         # show the help banner if --help or -h has been specified.
         if(@self::$return['help_given']) self::help();
-        
+
         # validate and prepare each key/value pair for return
         foreach(Pharse::$options as $key => $option){
             $option->validate();
@@ -108,8 +108,8 @@ class Pharse{
         # return the array of parsed options
         return self::$return;
     }
-    
-    
+
+
     /**
      * Sets the help banner
      * 
@@ -130,7 +130,7 @@ class Pharse{
         if(self::$banner != null){
             echo self::$banner . "\n";
         }
-        
+
         # to get the formatting to look nice when printed, do some
         # calculations regarding help message line-length.
         $max_before_colon_pos = 0;
@@ -146,7 +146,7 @@ class Pharse{
             $before_colon_pos = strlen(substr($line, 0, strpos($line, ':')));
             if($before_colon_pos > $max_before_colon_pos) $max_before_colon_pos = $before_colon_pos;
         }
-        
+
         # then display the options
         echo "Options:\n";
         foreach(self::$options as $option){       
@@ -157,12 +157,12 @@ class Pharse{
             } else {
                 $line = "{$option->long}, {$option->short}: {$option->description}\n";
             }
-            
+
             # now pad the string before the colon with spaces as appropriate
             $before_colon_str = substr($line, 0, strpos($line, ':'));
             $before_colon_str = str_pad($before_colon_str, $max_before_colon_pos, ' ', STR_PAD_LEFT);
             $after_colon_str  = substr($line, strpos($line, ':'));
-            
+
             # and output the result
             echo "$before_colon_str$after_colon_str";
         }
@@ -182,7 +182,7 @@ class PharseOption{
     public $required;
     public $short;
     public $value;
-    
+
     /**
      * Construct the Pharse options
      */
@@ -213,8 +213,8 @@ class PharseOption{
             }
         } while(!$short_accepted);
     }
-    
-    
+
+
     /**
      * Validates each option
      */
@@ -223,12 +223,12 @@ class PharseOption{
         if($this->description == ''){
             die("Pharse library error: description for {$this->long} was not specified.\n");
         }
-        
+
         # require that required variables have a value
         if($this->required && $this->value == null){
             die("Error: required value for {$this->long} was not specified.\n");
         }
-        
+
         # if a type constraint was specified, verify that the constraint
         # itself is valid.
         if($this->type != null && (
@@ -239,17 +239,17 @@ class PharseOption{
         )){
             die("Pharse library error: invalid type constraint set for {$this->long}. Must be int, integer, number, or string.\n");
         }
-                
+
         # do type-checking on integers
         if($this->required &&  ($this->type === 'int' || $this->type === 'integer')){
             is_int($this->value) or die("Error: option {$this->long} must be an integer.\n");
         }
-        
+
         # do type-checking on numbers
         if($this->required && $this->type === 'number'){
             is_numeric($this->value) or die("Error: option {$this->long} must be a number.\n");
         }
-        
+
         # do type-checking on strings
         if($this->required && $this->type === 'string'){
             is_string($this->value) or die("Error: option {$this->long} must be a string.\n");

@@ -9,41 +9,41 @@ Options must be specified thusly:
 
 # an outermost array of options
 $options = array(
-	# the option name (key), and an array of option parameters (val)
-	# the option name is the option's long form (ie, --option-name)
-	# @note: underscores will be replaced with hyphens when displayed to/
-	# read from the command line
-	'option_name'	=> array(
-		# This is a verbose description of the option
-		'description'	=> 'This option is an example',
-		
-		# Should this be required? Specify true or false (boolean), as appropriate
-		'required'	    => true, 
-		
-		# specify the short option flag (eg, -x). If a short option is
-		# not explicitly specified, one will be chosen programatically
-		'short'			=> 'x',
-		
-		# The type may be specified. Pharse will perform basic validations
-		# on the inputs. Valid settings are 'int', 'integer', 'number',
-		# and 'string'
-		'type'			=> 'string', 
-		
-		# A default value that should be assumed if an option is not
-		# explicitly passed a value
-		'default'		=> 'the-default',
-	),
+    # the option name (key), and an array of option parameters (val)
+    # the option name is the option's long form (ie, --option-name)
+    # @note: underscores will be replaced with hyphens when displayed to/
+    # read from the command line
+    'option_name'	=> array(
+        # This is a verbose description of the option
+        'description'	=> 'This option is an example',
+
+        # Should this be required? Specify true or false (boolean), as appropriate
+        'required'	    => true, 
+
+        # specify the short option flag (eg, -x). If a short option is
+        # not explicitly specified, one will be chosen programatically
+        'short'			=> 'x',
+
+        # The type may be specified. Pharse will perform basic validations
+        # on the inputs. Valid settings are 'int', 'integer', 'number',
+        # and 'string'
+        'type'			=> 'string', 
+
+        # A default value that should be assumed if an option is not
+        # explicitly passed a value
+        'default'		=> 'the-default',
+    ),
 );
-*/
+ */
 
 # specify some options
 $options = array(
     'user_name' => array(
-		'description'   => 'Your username',
+        'description'   => 'Your username',
         'default'       => 'admin',
         'type'          => 'string',
         'required'      => true,
-		'short'			=> 'u',
+        'short'			=> 'u',
     ),
     'password' => array(
         'description'   => 'Your password',
@@ -80,17 +80,17 @@ other words, this will NOT work:
 
  $ ./example.php -u chris
 
-*/
+ */
 
 # Now, just some obvious sample usage here.
 if($opts['user_name'] === 'root'){
-	if($opts['password'] === 'Password+1'){
-		die("Welcome back, trusted administrator. To which pastebin service would you like to upload our source code and user data?\n");
-	} else {
-		die("You entered the wrong password. Hint: your password is 'Password+1.'\n");
-	}
+    if($opts['password'] === 'Password+1'){
+        die("Welcome back, trusted administrator. To which pastebin service would you like to upload our source code and user data?\n");
+    } else {
+        die("You entered the wrong password. Hint: your password is 'Password+1.'\n");
+    }
 } else {
-	die("Only root is allowed to log in. Disconnect immediately or we will do literally nothing about it.\n");
+    die("Only root is allowed to log in. Disconnect immediately or we will do literally nothing about it.\n");
 }
 
 
