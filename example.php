@@ -13,32 +13,32 @@ $options = array(
     # the option name is the option's long form (ie, --option-name)
     # @note: underscores will be replaced with hyphens when displayed to/
     # read from the command line
-    'option_name'	=> array(
+    'option_name'=> array(
         # This is a verbose description of the option
-        'description'	=> 'This option is an example',
+        'description' => 'This option is an example',
 
         # Should this be required? Specify true or false (boolean), as appropriate
-        'required'	    => true, 
+        'required'    => true, 
 
         # specify the short option flag (eg, -x). If a short option is
         # not explicitly specified, one will be chosen programatically
-        'short'			=> 'x',
+        'short'       => 'x',
 
         # The type may be specified. Pharse will perform basic validations
         # on the inputs. Valid settings are 'int', 'integer', 'number',
         # and 'string'
-        'type'			=> 'string', 
+        'type'        => 'string', 
 
         # A default value that should be assumed if an option is not
         # explicitly passed a value
-        'default'		=> 'the-default',
+        'default'     => 'the-default',
     ),
 );
  */
 
 # specify some options
 $options = array(
-    'user_name' => array(
+    'username' => array(
         'description'   => 'Your username',
         'default'       => 'admin',
         'type'          => 'string',
@@ -68,9 +68,9 @@ Presume you invoked this script from the shell like this:
 At this point, $opts looks like this:
 Array
 (
-     [user_name] => chris
-     [user_name_given] => 1
-     [password] => sexsecretlovegod
+     [username]       => chris
+     [username_given] => 1
+     [password]       => sexsecretlovegod
      [password_given] => 1
 )
 
@@ -83,7 +83,7 @@ other words, this will NOT work:
  */
 
 # Now, just some obvious sample usage here.
-if($opts['user_name'] === 'root'){
+if($opts['username'] === 'root'){
     if($opts['password'] === 'Password+1'){
         die(
             "Welcome back, trusted administrator. To which pastebin service " . 
