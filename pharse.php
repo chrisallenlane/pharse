@@ -4,10 +4,10 @@
  * This is the main option parser class
  */
 class Pharse{
-    static $banner  = null;
-    static $options = array();
-    static $return  = array();
-    static $shorts  = array();
+    static $banner       = null;
+    static $options      = array();
+    static $return       = array();
+    static $shorts       = array();
 
     /**
      * This is the main option parsing method
@@ -37,7 +37,7 @@ class Pharse{
         # cheaply parse the args into $key => $val
         $arg_string = trim(implode($argv, ' '));
         $arg_string = str_replace('--', '-', $arg_string);
-        $args = explode('-', $arg_string);
+        $args       = explode('-', $arg_string);
         unset($args[0]);
 
         # assemble an array of proper options
@@ -138,13 +138,16 @@ class Pharse{
             # calculate the line-length based on the absence or presence
             # of a type requirement
             if($option->type != null){
-                $t = substr($option->type, 0, 1);
+                $t    = substr($option->type, 0, 1);
                 $line = "{$option->long}, {$option->short} <$t>: {$option->description}\n";
             } else {
                 $line = "{$option->long}, {$option->short}: {$option->description}\n";
             }
             $before_colon_pos = strlen(substr($line, 0, strpos($line, ':')));
-            if($before_colon_pos > $max_before_colon_pos) $max_before_colon_pos = $before_colon_pos;
+
+            if($before_colon_pos > $max_before_colon_pos) {
+                $max_before_colon_pos = $before_colon_pos;
+            }
         }
 
         # then display the options
@@ -152,7 +155,7 @@ class Pharse{
         foreach(self::$options as $option){       
             # same as above
             if($option->type != null){
-                $t = substr($option->type, 0, 1);
+                $t    = substr($option->type, 0, 1);
                 $line = "{$option->long}, {$option->short} <$t>: {$option->description}\n";
             } else {
                 $line = "{$option->long}, {$option->short}: {$option->description}\n";
@@ -174,6 +177,11 @@ class Pharse{
  * This class encapsulates the options
  */
 class PharseOption{
+    # constants for type-checking
+    const PHARSE_NUMBER  = 'number';
+    const PHARSE_INTEGER = 'integer';
+    const PHARSE_STRING  = 'string';
+
     public $description;
     public $default;
     public $long;
@@ -182,9 +190,12 @@ class PharseOption{
     public $required;
     public $short;
     public $value;
-
+    
     /**
      * Construct the Pharse options
+     *
+     * @param string $name             The name of the option
+     * @param array $data              The option data
      */
     public function __construct($name, $data){
         # map the array to object properties
@@ -194,9 +205,10 @@ class PharseOption{
         $this->name         = $name;
         $this->type         = (isset($data['type'])) ? strtolower($data['type']) : null;
         $this->required     = @(bool) $data['required'];
+        
         # determine the best short option to use
-        $short_candidate = (isset($data['short'])) ? $data['short'] : substr($this->name, 0, 1);
-        $short_accepted  = false;
+        $short_candidate    = (isset($data['short'])) ? $data['short'] : substr($this->name, 0, 1);
+        $short_accepted     = false;
         do{
             if(!isset(Pharse::$shorts[$short_candidate])){
                 # map the short argument to the long argument    
@@ -220,7 +232,7 @@ class PharseOption{
      */
     public function validate(){
         # require that there is a description
-        if($this->description == ''){
+        if($this->description === ''){
             die("Pharse library error: description for {$this->long} was not specified.\n");
         }
 
@@ -231,27 +243,27 @@ class PharseOption{
 
         # if a type constraint was specified, verify that the constraint
         # itself is valid.
-        if($this->type != null && (
+        if($this->type  != null && (
             $this->type != 'int' &&
-            $this->type != 'integer' &&
-            $this->type != 'number' &&
-            $this->type != 'string'
+            $this->type != self::PHARSE_INTEGER &&
+            $this->type != self::PHARSE_NUMBER  &&
+            $this->type != self::PHARSE_STRING
         )){
             die("Pharse library error: invalid type constraint set for {$this->long}. Must be int, integer, number, or string.\n");
         }
 
         # do type-checking on integers
-        if($this->required &&  ($this->type === 'int' || $this->type === 'integer')){
+        if($this->required &&  ($this->type === 'int' || $this->type === self::PHARSE_INTEGER)){
             is_int($this->value) or die("Error: option {$this->long} must be an integer.\n");
         }
 
         # do type-checking on numbers
-        if($this->required && $this->type === 'number'){
+        if($this->required && $this->type === self::PHARSE_NUMBER){
             is_numeric($this->value) or die("Error: option {$this->long} must be a number.\n");
         }
 
         # do type-checking on strings
-        if($this->required && $this->type === 'string'){
+        if($this->required && $this->type === self::PHARSE_STRING){
             is_string($this->value) or die("Error: option {$this->long} must be a string.\n");
         }
     }

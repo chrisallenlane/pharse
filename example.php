@@ -85,12 +85,18 @@ other words, this will NOT work:
 # Now, just some obvious sample usage here.
 if($opts['user_name'] === 'root'){
     if($opts['password'] === 'Password+1'){
-        die("Welcome back, trusted administrator. To which pastebin service would you like to upload our source code and user data?\n");
+        die(
+            "Welcome back, trusted administrator. To which pastebin service " . 
+            "would you like to upload our source code and user data?\n"
+        );
     } else {
         die("You entered the wrong password. Hint: your password is 'Password+1.'\n");
     }
 } else {
-    die("Only root is allowed to log in. Disconnect immediately or we will do literally nothing about it.\n");
+    die(
+        "Only root is allowed to log in. Disconnect immediately or we will do " .
+        "literally nothing about it.\n"
+    );
 }
 
 
