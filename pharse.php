@@ -8,6 +8,11 @@ class Pharse{
     static $options      = array();
     static $return       = array();
     static $shorts       = array();
+    
+    # constants for type-checking
+    const PHARSE_NUMBER  = 'number';
+    const PHARSE_INTEGER = 'integer';
+    const PHARSE_STRING  = 'string';
 
     /**
      * This is the main option parsing method
@@ -23,8 +28,8 @@ class Pharse{
         # manually add the default 'help' command
         $options += array(
             'help' => array(
-                'short'         => 'h',
-                'description'   => 'Display this help banner',
+                'short'       => 'h',
+                'description' => 'Display this help banner',
             )
         );
 
@@ -98,7 +103,7 @@ class Pharse{
 
         # Now that we've successfully parsed the options, simply
         # show the help banner if --help or -h has been specified.
-        if(@self::$return['help_given']) self::help();
+        if(@self::$return['help_given']) { self::help(); }
 
         # validate and prepare each key/value pair for return
         foreach(Pharse::$options as $key => $option){
@@ -127,7 +132,7 @@ class Pharse{
      */
     static function help(){
         # display the help banner if one has been set
-        if(self::$banner != null){
+        if(self::$banner !== null){
             echo self::$banner . "\n";
         }
 
@@ -177,11 +182,6 @@ class Pharse{
  * This class encapsulates the options
  */
 class PharseOption{
-    # constants for type-checking
-    const PHARSE_NUMBER  = 'number';
-    const PHARSE_INTEGER = 'integer';
-    const PHARSE_STRING  = 'string';
-
     public $description;
     public $default;
     public $long;
@@ -245,25 +245,25 @@ class PharseOption{
         # itself is valid.
         if($this->type  != null && (
             $this->type != 'int' &&
-            $this->type != self::PHARSE_INTEGER &&
-            $this->type != self::PHARSE_NUMBER  &&
-            $this->type != self::PHARSE_STRING
+            $this->type != Pharse::PHARSE_INTEGER &&
+            $this->type != Pharse::PHARSE_NUMBER  &&
+            $this->type != Pharse::PHARSE_STRING
         )){
             die("Pharse library error: invalid type constraint set for {$this->long}. Must be int, integer, number, or string.\n");
         }
 
         # do type-checking on integers
-        if($this->required &&  ($this->type === 'int' || $this->type === self::PHARSE_INTEGER)){
+        if($this->required &&  ($this->type === 'int' || $this->type === Pharse::PHARSE_INTEGER)){
             is_int($this->value) or die("Error: option {$this->long} must be an integer.\n");
         }
 
         # do type-checking on numbers
-        if($this->required && $this->type === self::PHARSE_NUMBER){
+        if($this->required && $this->type === Pharse::PHARSE_NUMBER){
             is_numeric($this->value) or die("Error: option {$this->long} must be a number.\n");
         }
 
         # do type-checking on strings
-        if($this->required && $this->type === self::PHARSE_STRING){
+        if($this->required && $this->type === Pharse::PHARSE_STRING){
             is_string($this->value) or die("Error: option {$this->long} must be a string.\n");
         }
     }

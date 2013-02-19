@@ -1,4 +1,5 @@
 #!/usr/bin/env php
+
 <?php
 
 # include Pharse
@@ -9,10 +10,12 @@ Options must be specified thusly:
 
 # an outermost array of options
 $options = array(
+
     # the option name (key), and an array of option parameters (val)
     # the option name is the option's long form (ie, --option-name)
     # @note: underscores will be replaced with hyphens when displayed to/
     # read from the command line
+
     'option_name'=> array(
         # This is a verbose description of the option
         'description' => 'This option is an example',
@@ -32,23 +35,24 @@ $options = array(
         # A default value that should be assumed if an option is not
         # explicitly passed a value
         'default'     => 'the-default',
+
     ),
 );
- */
+*/
 
 # specify some options
 $options = array(
     'username' => array(
         'description'   => 'Your username',
         'default'       => 'admin',
-        'type'          => 'string',
+        'type'          => Pharse::PHARSE_STRING,
         'required'      => true,
         'short'			=> 'u',
     ),
     'password' => array(
         'description'   => 'Your password',
         'default'       => 'sexsecretlovegod',
-        'type'          => 'string',
+        'type'          => Pharse::PHARSE_STRING,
         'required'      => true,
     ),
 );
@@ -80,7 +84,7 @@ other words, this will NOT work:
 
  $ ./example.php -u chris
 
- */
+*/
 
 # Now, just some obvious sample usage here.
 if($opts['username'] === 'root'){
@@ -98,7 +102,4 @@ if($opts['username'] === 'root'){
         "literally nothing about it.\n"
     );
 }
-
-
-
 
